@@ -160,28 +160,38 @@ function showCustomerDetails() {
         contact["Address Name"] === selectedLocation // Updated line to match Address Name
     );
 
-    if (selectedContact) {
-        customerDetailsContent.innerHTML = `
-            <h3>Contact Details</h3>
-            <p><strong>Contact Name:</strong> ${selectedContact["Contact Name"]}</p>
-            <p><strong>Address Line 1:</strong> ${selectedContact["Address Line 1"]}</p>
-            <p><strong>Address Line 2:</strong> ${selectedContact["Address Line 2"] || ''}</p>
-            <p><strong>Town:</strong> ${selectedContact["Address Town"]}</p>
-            <p><strong>County:</strong> ${selectedContact["Address County"]}</p>
-            <p><strong>Postcode:</strong> ${selectedContact["Address Postcode"]}</p>
-            <p><strong>Telephone:</strong> ${selectedContact["Telephone"]}</p>
-            <p><strong>Mobile Number:</strong> ${selectedContact["Mobile Number"]}</p>
-            <p><strong>Contact Job Title:</strong> ${selectedContact["Contact Job Title"]}</p>
-            <p><strong>Contact Phone Number:</strong> ${selectedContact["Contact Phone Number"]}</p>
-            <p><strong>Contact Email Address:</strong> ${selectedContact["Contact Email Address"]}</p>
-            <p><strong>Direction:</strong> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedContact["Address Postcode"])}" target="_blank">
-    Click Here</a></p>
-        `;
-        openModal();
-    } else {
-        customerDetailsContent.innerHTML = "<p>No contact details found for this customer at the selected location.</p>";
-        openModal();
-    }
+// Function to detect if the user is on a mobile device
+function isMobileDevice() {
+    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+}
+
+if (selectedContact) {
+    // Check if the user is on a mobile device
+    const isMobile = isMobileDevice();
+    
+    // Format telephone numbers as clickable links if on mobile
+    const telephone = isMobile ? `<a href="tel:${selectedContact["Telephone"]}">${selectedContact["Telephone"]}</a>` : selectedContact["Telephone"];
+    const mobileNumber = isMobile ? `<a href="tel:${selectedContact["Mobile Number"]}">${selectedContact["Mobile Number"]}</a>` : selectedContact["Mobile Number"];
+    const contactPhoneNumber = isMobile ? `<a href="tel:${selectedContact["Contact Phone Number"]}">${selectedContact["Contact Phone Number"]}</a>` : selectedContact["Contact Phone Number"];
+
+    customerDetailsContent.innerHTML = `
+        <h3>Contact Details</h3>
+        <p><strong>Contact Name:</strong> ${selectedContact["Contact Name"]}</p>
+        <p><strong>Address Line 1:</strong> ${selectedContact["Address Line 1"]}</p>
+        <p><strong>Address Line 2:</strong> ${selectedContact["Address Line 2"] || ''}</p>
+        <p><strong>Town:</strong> ${selectedContact["Address Town"]}</p>
+        <p><strong>County:</strong> ${selectedContact["Address County"]}</p>
+        <p><strong>Postcode:</strong> ${selectedContact["Address Postcode"]}</p>
+        <p><strong>Telephone:</strong> ${telephone}</p>
+        <p><strong>Mobile Number:</strong> ${mobileNumber}</p>
+        <p><strong>Contact Job Title:</strong> ${selectedContact["Contact Job Title"]}</p>
+        <p><strong>Contact Phone Number:</strong> ${contactPhoneNumber}</p>
+        <p><strong>Contact Email Address:</strong> ${selectedContact["Contact Email Address"]}</p>
+        <p><strong>Direction:</strong> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedContact["Address Postcode"])}" target="_blank">
+Click Here</a></p>
+    `;
+    openModal();
+}
 }
 
 // Function to open the modal
