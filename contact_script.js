@@ -128,6 +128,7 @@ function clearSearch() {
     document.getElementById("customerSelect").innerHTML = '<option value="">Select a customer</option>'; // Clear dropdown
     document.getElementById("addressSelect").innerHTML = '<option value="">Select an address</option>'; // Clear address dropdown
     document.getElementById("contactInfo").innerHTML = ""; // Clear contact info
+    document.getElementById("updateDetails").value = ""; // Clear details
 }
 
 // New function to send update email
