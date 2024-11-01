@@ -1,4 +1,4 @@
-let contact = []; // Declare the contacts variable
+let contacts = []; // Declare the contacts variable
 
 // Function to load CSV data
 function loadCSVData() {
@@ -130,6 +130,17 @@ function clearSearch() {
     document.getElementById("contactInfo").innerHTML = ""; // Clear contact info
 }
 
+// New function to send update email
+function sendUpdateEmail() {
+    const customerName = document.getElementById("customerSelect").options[document.getElementById("customerSelect").selectedIndex].text;
+    const updateDetails = document.getElementById("updateDetails").value;
+    const email = 'eve.heaton@quantil.co.uk';
+    const subject = encodeURIComponent(`${customerName} - Contact Update Details`);
+    const body = encodeURIComponent(updateDetails);
+
+    // Open mailto link in the user's default email client
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+}
+
 // Load CSV data when the page loads
 window.onload = loadCSVData;
-
