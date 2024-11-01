@@ -1,4 +1,4 @@
-let contacts = []; // Declare the contacts variable
+let contact = []; // Declare the contacts variable
 
 // Function to load CSV data
 function loadCSVData() {
