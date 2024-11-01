@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Reserves</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <img width="500px" src="Logo.svg" alt="Logo" id="logo">
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+ <form>
+    <label for="pswd">Enter your password: </label>
+    <br>
+    <br>
+    <input type="password" id="pswd">
+    <input type="button" value="Submit" onclick="checkPswd();" />
+</form>
+<script type="text/javascript">
+    function checkPswd() {
+        var confirmPassword = "1953";
+        var password = document.getElementById("pswd").value;
+        if (password == confirmPassword) {
+             window.location="home.html";
+        }
+        else{
+            alert("Passwords do not match.");
+        }
+    }
+</script>
+</body>
+</html>

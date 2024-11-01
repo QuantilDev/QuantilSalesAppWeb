@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Spend</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="papaparse.min.js"></script>
+</head>
+<body>
+    <div>
+        <img width="500px" src="Logo.svg" alt="Logo" id="logo">
+    </div>
+    <!-- Modal for Customer Details -->
+    <div id="customerDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <div id="customerDetailsContent"></div>
+        </div>
+    </div>
+
+    <div>
+        <input type="text" id="customerSearch" placeholder="Search for a customer..." oninput="filterCustomers()">
+    </div>
+    <div>
+        <select id="customerSelect" onchange="selectCustomer()">
+            <option value="">Select a customer</option>
+        </select>  
+    </div>
+    <div>
+        <br>
+    </div>
+    <div>
+        <select id="locationSelect" onchange="showDataForLocation()">
+            <option value="">Select a location</option>
+        </select>
+    </div>
+    <button onclick="clearSearch()">Clear</button>
+    <button onclick="showCustomerDetails()">View Customer Details</button>
+    <!-- <button onclick="window.location.href='https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=a1PjQ_uKx0KhpTy_R6GZbzJtL9RsyIhDs6fxLvoQECNUQVZCN0s0N01XUlcyNDZJQ0ZWWFVUNUMzOS4u'">Client Form</button> -->
+    <div id="customerDetails" style="display: none; margin-top: 20px; text-align: left;"></div>
+
+    <div id="accountInfo"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice Group</th>
+                <th>Total</th>
+                <th>Volume</th>
+            </tr>
+        </thead>
+        <tbody id="customerTableBody"></tbody>
+    </table>
+
+    <button onclick="window.location.href='home.html'">Back</button>
+    <script src="contact_script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

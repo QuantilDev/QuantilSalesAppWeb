@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Reserves</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="papaparse.min.js"></script> <!-- Ensure this file is in your project -->
+    <style>
+        .reserve-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .reserve-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img width="500px" src="Logo.svg" alt="Logo" id="logo">
+    </div>
+
+    <label for="centreSelect">Select Centre:</label>
+    <select id="centreSelect" onchange="filterCentre()">
+        <option value="">--Select Centre--</option>
+    </select>
+
+    <table id="orderTable">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>2024 Reserves</th>
+                <th>2025 Reserves</th>
+                <th>Full/Half</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+    
+    <button onclick="sendEmail()">Send Email</button> <!-- Button to trigger email sending -->
+    <button onclick="window.location.href='home.html'">Back</button>
+    <script src="reserves_script.js"></script>
+</body>
+</html>

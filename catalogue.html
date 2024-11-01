@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullscreen PDF Embed</title>
+  <style>
+    /* Set the container to fill the viewport */
+    #pdfRenderer {
+      width: 100vw;  /* Full viewport width */
+      height: 100vh; /* Full viewport height */
+    }
+
+    /* Optional: Remove extra space and ensure full height for body */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;  /* Prevents scrollbars */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pdfRenderer"></div>
+
+  <!-- Load the PDFObject library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.min.js"></script>
+
+  <script>
+    // Embed the PDF, set to "Fit" to ensure fullscreen scaling
+    PDFObject.embed("Quantil 2025 Catalogue.pdf", "#pdfRenderer", {
+      pdfOpenParams: {
+        view: "Fit"  // Ensures the PDF scales to fit within the viewport
+      }
+    });
+  </script>
+
+</body>
+</html>
