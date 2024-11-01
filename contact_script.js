@@ -81,6 +81,11 @@ function selectCustomer() {
     document.getElementById("contactInfo").innerHTML = "";
 }
 
+// Function to detect if the user is on a mobile device
+function isMobileDevice() {
+    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+}
+
 // Function to display contact details as regular text
 function displayContactDetails(contact) {
     const contactInfoDiv = document.getElementById("contactInfo");
@@ -89,21 +94,31 @@ function displayContactDetails(contact) {
     // If no contact is selected, do not display anything
     if (!contact) return;
 
+    // Check if the user is on a mobile device
+    const isMobile = isMobileDevice();
+
+    // Format telephone numbers as clickable links if on mobile
+    const telephone = isMobile ? `<a href="tel:${contact["Telephone"]}">${contact["Telephone"]}</a>` : contact["Telephone"];
+    const mobileNumber = isMobile ? `<a href="tel:${contact["Mobile Number"]}">${contact["Mobile Number"]}</a>` : contact["Mobile Number"];
+    const contactPhoneNumber = isMobile ? `<a href="tel:${contact["Contact Phone Number"]}">${contact["Contact Phone Number"]}</a>` : contact["Contact Phone Number"];
+    const contactMobileNumber = isMobile ? `<a href="tel:${contact["Contact Mobile Number"]}">${contact["Contact Mobile Number"]}</a>` : contact["Contact Mobile Number"];
+
     const contactDetails = `
         <p><strong>Customer Name:</strong> ${contact["Customer Name"]}</p>
         <p><strong>Account Number:</strong> ${contact["Customer Account Number"]}</p>
         <p><strong>Address:</strong> ${contact["Address Name"]}, ${contact["Address Line 1"]}, ${contact["Address Line 2"] || ''}, ${contact["Address Town"]}, ${contact["Address County"]}, ${contact["Address Postcode"]}</p>
-        <p><strong>Telephone:</strong> ${contact["Telephone"]}</p>
-        <p><strong>Mobile Number:</strong> ${contact["Mobile Number"]}</p>
+        <p><strong>Telephone:</strong> ${telephone}</p>
+        <p><strong>Mobile Number:</strong> ${mobileNumber}</p>
         <p><strong>Contact Name:</strong> ${contact["Contact Name"]}</p>
         <p><strong>Job Title:</strong> ${contact["Contact Job Title"]}</p>
-        <p><strong>Contact Phone Number:</strong> ${contact["Contact Phone Number"]}</p>
-        <p><strong>Contact Mobile Number:</strong> ${contact["Contact Mobile Number"]}</p>
+        <p><strong>Contact Phone Number:</strong> ${contactPhoneNumber}</p>
+        <p><strong>Contact Mobile Number:</strong> ${contactMobileNumber}</p>
         <p><strong>Contact Email Address:</strong> ${contact["Contact Email Address"]}</p>
         <hr>
     `;
     contactInfoDiv.innerHTML += contactDetails; // Append contact details to the div
 }
+
 
 // Function to select address and display corresponding contact details
 function selectAddress() {
