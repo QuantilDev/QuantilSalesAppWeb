@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #fd7e14;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar button {
+            background-color: #685D4B;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .sidebar button:hover {
+            background-color: #777;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 0;
+            overflow: hidden;
+            border-left: 2px solid #ccc;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button onclick="loadPage('Quantil 2025 Catalogue.html')">Catalogue</button>
+        <button onclick="loadPage('2025_Price_List.html')">2025 Price List</button>
+        <button onclick="loadPage('Mixed_Veg_Pot.html')">Mixed Veg Trolley</button>
+    </div>
+    <div class="content">
+        <iframe id="viewer" src=""></iframe>
+    </div>
+
+    <script>
+        // Function to load the selected page into the iframe
+        function loadPage(file) {
+            const viewer = document.getElementById('viewer');
+            viewer.src = file; // Dynamically change the iframe source
+        }
+    </script>
+</body>
+</html>
