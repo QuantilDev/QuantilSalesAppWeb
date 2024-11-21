@@ -43,6 +43,31 @@
             height: 100%;
             border: none;
         }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 50px; /* Collapse sidebar */
+                overflow: hidden;
+            }
+
+            .sidebar button, .sidebar a {
+                text-align: center;
+                padding: 10px 5px;
+            }
+
+            .sidebar button span, .sidebar a span {
+                display: none; /* Hide button text for small screens */
+            }
+
+            .sidebar:hover {
+                width: 200px; /* Expand on hover */
+            }
+
+            .sidebar:hover button span, .sidebar:hover a span {
+                display: inline; /* Show text on hover */
+            }
+        }
     </style>
 </head>
 <body>
@@ -53,10 +78,10 @@
         <br>
         <button onclick="window.location.href='home.html'">Back</button>
     </div>
-    <div class="content">
-        <iframe id="viewer" src=""></iframe>
-    </div>
-
+<!-- Content Area -->
+<div class="content">
+    <iframe id="viewer" src=""></iframe>
+</div>
     <script>
         // Function to load the selected page into the iframe
         function loadPage(file) {
