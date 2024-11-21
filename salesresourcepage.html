@@ -34,16 +34,26 @@
         }
         .content {
             flex-grow: 1;
-            padding: 0;
+            padding: 20px;
             overflow: hidden;
             border-left: 2px solid #ccc;
+            position: relative;
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: none; /* Hide iframe initially */
         }
-        
+
+        .message {
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+            display: block; /* Initially show message */
+        }
+
         /* Responsive styles */
         @media (max-width: 768px) {
             .sidebar {
@@ -51,12 +61,12 @@
                 overflow: hidden;
             }
 
-            .sidebar button, .sidebar a {
+            .sidebar button {
                 text-align: center;
                 padding: 10px 5px;
             }
 
-            .sidebar button span, .sidebar a span {
+            .sidebar button span {
                 display: none; /* Hide button text for small screens */
             }
 
@@ -64,7 +74,7 @@
                 width: 200px; /* Expand on hover */
             }
 
-            .sidebar:hover button span, .sidebar:hover a span {
+            .sidebar:hover button span {
                 display: inline; /* Show text on hover */
             }
         }
@@ -78,14 +88,23 @@
         <br>
         <button onclick="window.location.href='home.html'">Back</button>
     </div>
-<!-- Content Area -->
-<div class="content">
-    <iframe id="viewer" src=""></iframe>
-</div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <div id="message" class="message">Please select a button from the sidebar to view.</div>
+        <iframe id="viewer" src=""></iframe>
+    </div>
+
     <script>
         // Function to load the selected page into the iframe
         function loadPage(file) {
             const viewer = document.getElementById('viewer');
+            const message = document.getElementById('message');
+            
+            // Hide the message and show the iframe
+            message.style.display = 'none';
+            viewer.style.display = 'block';
+            
             viewer.src = file; // Dynamically change the iframe source
         }
     </script>
