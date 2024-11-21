@@ -4,46 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Tools</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            display: flex;
-            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
             margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
             height: 100vh;
         }
+
+        /* Sidebar styles */
         .sidebar {
-            width: 200px;
             background-color: #F0F0F0;
             color: #fff;
+            width: 200px;
             padding: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            transition: width 0.3s ease-in-out;
         }
-        .sidebar button {
+
+        .sidebar button, .sidebar a {
             background-color: #fd7e14;
             color: #fff;
             border: none;
             padding: 10px;
             cursor: pointer;
             text-align: left;
+            text-decoration: none;
+            display: block;
         }
-        .sidebar button:hover {
+
+        .sidebar button:hover, .sidebar a:hover {
             background-color: #777;
         }
+
         .content {
             flex-grow: 1;
             padding: 0;
             overflow: hidden;
             border-left: 2px solid #ccc;
         }
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-        
+
         /* Responsive styles */
         @media (max-width: 768px) {
             .sidebar {
@@ -71,17 +80,20 @@
     </style>
 </head>
 <body>
+    <!-- Sidebar -->
     <div class="sidebar">
-        <button onclick="loadPage('Quantil 2025 Catalogue.html')">Catalogue</button>
+	<button onclick="loadPage('Quantil 2025 Catalogue.html')">Catalogue</button>
         <button onclick="loadPage('2025_Price_List.html')">2025 Price List</button>
         <button onclick="loadPage('Mixed_Veg_Pot.html')">Mixed Veg Trolley</button>
         <br>
         <button onclick="window.location.href='home.html'">Back</button>
     </div>
-<!-- Content Area -->
-<div class="content">
-    <iframe id="viewer" src=""></iframe>
-</div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <iframe id="viewer" src=""></iframe>
+    </div>
+
     <script>
         // Function to load the selected page into the iframe
         function loadPage(file) {
