@@ -124,6 +124,12 @@ function showDataForLocation() {
 
     filtered2024Data.forEach(currentYearEntry => {
         const invoiceGroup = currentYearEntry.Invoice_Group;
+        
+        // Skip rows with "Point of Sale"
+        if (invoiceGroup === "Point of Sale") {
+            return; // Skip this row
+        }
+
         const currentYearTotal = parseFloat(currentYearEntry.Total || 0);
         const currentYearVolume = parseInt(currentYearEntry.Volume || 0);
     
@@ -138,12 +144,21 @@ function showDataForLocation() {
         const totalClass = totalDifference === 0 ? "" : (totalDifference >= 0 ? "positive" : "negative");
         const volumeClass = volumeDifference === 0 ? "" : (volumeDifference >= 0 ? "positive" : "negative");
 
-        // Add class for invoice group text if volume is above 15
-        const invoiceGroupClass = currentYearVolume > 15 ? "high-volume" : "";
-        
-        // Add class for 2024 volume if it's above 15
-        const volumeClass2024 = currentYearVolume > 15 ? "high-volume" : "";
+        // Add class for invoice group text if volume is above 15, but exclude specific products
+        const excludedProducts = [
+            "Strip Vegetables Tray of 6",
+            "8.5cm Pot Herb Tray of 18",
+            "8.5cm Pot vegetables Tray of 18",
+            "8.5cm Premium Pot Veg Tray of 18",
+            "1L Pot Herb Tray of 8",
+        ];
 
+        const invoiceGroupClass = excludedProducts.includes(invoiceGroup) || currentYearVolume <= 15 ? "" : "high-volume";
+
+        // Add class for 2024 volume if it's above 15, but exclude specific products
+        const volumeClass2024 = excludedProducts.includes(invoiceGroup) || currentYearVolume <= 15 ? "" : "high-volume";
+
+        // Add the row to the table HTML
         tableBodyHTML += `
             <tr>
                 <td class="${invoiceGroupClass}">${invoiceGroup}</td>
@@ -180,6 +195,7 @@ function showDataForLocation() {
     // Insert the table body HTML
     document.getElementById("customerTableBody").innerHTML = tableBodyHTML;
 }
+
 
 
 
