@@ -191,18 +191,17 @@ const populateCentreDropdown = () => {
     });
 };
 
-// Function to generate and download CSV
 const sendEmail = () => {
-    const selectedCentre = document.getElementById('centreSelect').value;
+    const selectedCentre = document.getElementById('centreSelect').value;  // Get the selected centre from the dropdown
     const tableRows = document.querySelectorAll('#orderTable tbody tr');
     let csvContent = "Customer,Product,2025 Reserves, Notes\n";
 
     tableRows.forEach(row => {
-        const [productCell, , inputCell, , notesCell] = row.children; // Updated to include the notes cell
+        const [productCell, , inputCell, , notesCell] = row.children;
         const product = productCell.textContent;
         const inputAmount = inputCell.querySelector('input').value || "0";
-        const notes = notesCell.querySelector('textarea').value || ""; // Get the notes value, default to empty string if not entered
-        csvContent += `${selectedCentre},${product},${inputAmount},${notes}\n`; // Add notes to CSV
+        const notes = notesCell.querySelector('textarea').value || ""; // Get notes value
+        csvContent += `${selectedCentre},${product},${inputAmount},${notes}\n`;
     });
 
     // Create a Blob for CSV, download link, and open email client
@@ -213,7 +212,10 @@ const sendEmail = () => {
     a.download = `${selectedCentre}_reserves_data.csv`;
     a.click();
     
-    const emailSubject = "Reserves Data";
+    // Use the selectedCentre in the email subject
+    const emailSubject = `${selectedCentre} - Reserves Data`;
     const emailBody = "Please find the reserves data attached.";
     window.location.href = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 };
+
+
