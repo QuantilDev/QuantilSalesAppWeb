@@ -209,3 +209,37 @@ th {
     color: red;
     font-weight: bold;
 }
+.high-volume {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+/* Legend Text Colors */
+.legend {
+    font-size: 14px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.legend ul {
+    list-style: none;
+    padding: 0;
+}
+
+.legend li {
+    margin: 5px 0;
+}
+
+.legend .spent-up {
+    color: green;
+}
+
+.legend .spent-down {
+    color: red;
+}
+
+.legend .reserve-placed {
+    color: #fd7e14;
+}

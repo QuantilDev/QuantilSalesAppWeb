@@ -4,7 +4,7 @@ let previousYearData = []; // Store previous year data
 
 // Load customers CSV data
 function loadCustomersData() {
-    Papa.parse("customers.csv", {
+    Papa.parse("customer.csv", {
         download: true,
         header: true,
         complete: function(results) {
@@ -137,12 +137,18 @@ function showDataForLocation() {
         // Apply classes based on positive or negative values, but not for zero
         const totalClass = totalDifference === 0 ? "" : (totalDifference >= 0 ? "positive" : "negative");
         const volumeClass = volumeDifference === 0 ? "" : (volumeDifference >= 0 ? "positive" : "negative");
-    
+
+        // Add class for invoice group text if volume is above 15
+        const invoiceGroupClass = currentYearVolume > 15 ? "high-volume" : "";
+        
+        // Add class for 2024 volume if it's above 15
+        const volumeClass2024 = currentYearVolume > 15 ? "high-volume" : "";
+
         tableBodyHTML += `
             <tr>
-                <td>${invoiceGroup}</td>
+                <td class="${invoiceGroupClass}">${invoiceGroup}</td>
                 <td>£${currentYearTotal.toFixed(2)}</td>
-                <td>${currentYearVolume}</td>
+                <td class="${volumeClass2024}">${currentYearVolume}</td>
                 <td>£${previousYearTotal.toFixed(2)}</td>
                 <td>${previousYearVolume}</td>
                 <td class="${totalClass}">£${totalDifference.toFixed(2)}</td>
@@ -187,9 +193,10 @@ function getPreviousYearTotal(customerName, location) {
 }
 
 // Helper function to format numbers with commas
-function formatNumber(num) {
+function formatNumberWithCommas(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 
 // Display only contact details in the modal based on selected customer and location
 function showCustomerDetails() {
