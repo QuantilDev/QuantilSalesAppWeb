@@ -195,13 +195,14 @@ const populateCentreDropdown = () => {
 const sendEmail = () => {
     const selectedCentre = document.getElementById('centreSelect').value;
     const tableRows = document.querySelectorAll('#orderTable tbody tr');
-    let csvContent = "Product,2025 Reserves\n";
+    let csvContent = "Customer,Product,2025 Reserves, Notes\n";
 
     tableRows.forEach(row => {
-        const [productCell, , inputCell] = row.children;
+        const [productCell, , inputCell, , notesCell] = row.children; // Updated to include the notes cell
         const product = productCell.textContent;
         const inputAmount = inputCell.querySelector('input').value || "0";
-        csvContent += `${selectedCentre},${product},${inputAmount}\n`;
+        const notes = notesCell.querySelector('textarea').value || ""; // Get the notes value, default to empty string if not entered
+        csvContent += `${selectedCentre},${product},${inputAmount},${notes}\n`; // Add notes to CSV
     });
 
     // Create a Blob for CSV, download link, and open email client
@@ -216,4 +217,3 @@ const sendEmail = () => {
     const emailBody = "Please find the reserves data attached.";
     window.location.href = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 };
-
