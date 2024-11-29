@@ -119,6 +119,9 @@ function showDataForLocation() {
     );
 
     let tableBodyHTML = "";
+    let total2024 = 0;
+    let total2023 = 0;
+
     filtered2024Data.forEach(currentYearEntry => {
         const invoiceGroup = currentYearEntry.Invoice_Group;
         const currentYearTotal = parseFloat(currentYearEntry.Total || 0);
@@ -146,11 +149,32 @@ function showDataForLocation() {
                 <td class="${volumeClass}">${volumeDifference}</td>
             </tr>
         `;
+        
+        // Add totals to the total variables
+        total2024 += currentYearTotal;
+        total2023 += previousYearTotal;
     });
-    
 
+    // Calculate total difference
+    const totalDifference = total2024 - total2023;
+    const totalClass = totalDifference === 0 ? "" : (totalDifference >= 0 ? "positive" : "negative");
+
+    // Create the totals section HTML
+    const totalsHTML = `
+        <div class="totals-section">
+            <strong>Total Spend 2024: </strong>£${total2024.toFixed(2)} <br>
+            <strong>Total Spend 2023: </strong>£${total2023.toFixed(2)} <br>
+            <strong>Difference: </strong><span class="${totalClass}">£${totalDifference.toFixed(2)}</span>
+        </div>
+    `;
+
+    // Insert the totals above the table
+    document.getElementById("totalsSection").innerHTML = totalsHTML;
+
+    // Insert the table body HTML
     document.getElementById("customerTableBody").innerHTML = tableBodyHTML;
 }
+
 
 
 // Helper function to get total from previous year's data
@@ -239,6 +263,7 @@ function clearSearch() {
     document.getElementById("customerTableBody").innerHTML = '';
     document.getElementById("accountInfo").innerHTML = '';
     document.getElementById("customerDetailsContent").innerHTML = '';
+    
 }
 
 

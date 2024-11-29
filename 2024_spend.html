@@ -31,24 +31,29 @@
         <select id="locationSelect">
             <option value="">Select a location</option>
         </select>
-        <div id="accountInfo"></div>
+        <br/>
         <br/>
         <button onclick="clearSearch()">Clear</button>
         <button id="showDetailsBtn">Show Customer Details</button>
-        <table id="customerTable">
-            <thead>
-                <tr>
-                    <th>Invoice Group</th>
-                    <th>2024 Total</th>
-                    <th>2024 Volume</th>
-                    <th>2023 Total</th>
-                    <th>2023 Volume</th>
-                    <th>Difference (Total)</th>
-                    <th>Difference (Volume)</th>
-                </tr>
-            </thead>
-            <tbody id="customerTableBody"></tbody>
-        </table>
+        <br>
+        <br/>
+        <div id="totalsSection"></div>
+
+<table id="customerTable">
+    <thead>
+        <tr>
+            <th>Invoice Group</th>
+            <th>2024 Total</th>
+            <th>2024 Volume</th>
+            <th>2023 Total</th>
+            <th>2023 Volume</th>
+            <th>Difference (Total)</th>
+            <th>Difference (Volume)</th>
+        </tr>
+    </thead>
+    <tbody id="customerTableBody"></tbody>
+</table>
+
               
 <!-- Modal HTML Structure -->
 <div id="contactModal" class="modal">
