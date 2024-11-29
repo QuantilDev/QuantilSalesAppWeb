@@ -1,5 +1,6 @@
 let customers = [];
 let contacts = [];
+let previousYearData = []; // Store previous year data
 
 // Load customers CSV data
 function loadCustomersData() {
@@ -28,6 +29,21 @@ function loadContactsData() {
         },
         error: function(error) {
             console.error("Error loading contacts CSV: ", error);
+        }
+    });
+}
+
+// Load previous year's (2023) CSV data
+function loadPreviousYearData() {
+    Papa.parse("2023_spend.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+            previousYearData = results.data;
+            console.log("Loaded previous year (2023) data: ", previousYearData);
+        },
+        error: function(error) {
+            console.error("Error loading previous year (2023) CSV: ", error);
         }
     });
 }
@@ -91,51 +107,60 @@ function selectCustomer() {
 
 // Show data for the selected location and calculate total spend
 function showDataForLocation() {
+    const selectedCustomer = document.getElementById("customerSelect").value;
     const selectedLocation = document.getElementById("locationSelect").value;
-    const selectedCustomerName = document.getElementById("customerSelect").value;
 
-    const filteredCustomers = customers.filter(customer => customer.Location === selectedLocation && customer.Customer_Name === selectedCustomerName);
+    const filtered2024Data = customers.filter(
+        customer => customer.Customer_Name === selectedCustomer && customer.Location === selectedLocation
+    );
+
+    const filtered2023Data = previousYearData.filter(
+        data => data.Customer_Name === selectedCustomer && data.Location === selectedLocation
+    );
+
+    let tableBodyHTML = "";
+    filtered2024Data.forEach(currentYearEntry => {
+        const invoiceGroup = currentYearEntry.Invoice_Group;
+        const currentYearTotal = parseFloat(currentYearEntry.Total || 0);
+        const currentYearVolume = parseInt(currentYearEntry.Volume || 0);
     
-    // Calculate total spend for the selected customer and location
-    const combinedData = {};
-    const totalSpend = filteredCustomers.reduce((sum, customer) => {
-        const invoiceGroup = customer.Invoice_Group;
-        
-        if (!combinedData[invoiceGroup]) {
-            combinedData[invoiceGroup] = { Total: 0, Volume: 0 };
-        }
-
-        combinedData[invoiceGroup].Total += parseFloat(customer.Total);
-        combinedData[invoiceGroup].Volume += parseInt(customer.Volume);
-        
-        // Sum up total spend
-        return sum + parseFloat(customer.Total);
-    }, 0);
-
-    // Display total spend for the selected customer and location
-    const accountInfoDiv = document.getElementById("accountInfo");
-    accountInfoDiv.innerHTML = `<h2>Total Spend for ${selectedCustomerName} at ${selectedLocation}: £${formatNumber(totalSpend.toFixed(2))}</h2>`;
-
-    // Populate table with invoice group data
-    let tableBody = "";
-    const volumeThreshold = 15; // Set the threshold for highlighting
-
-    for (const invoiceGroup in combinedData) {
-        const data = combinedData[invoiceGroup];
-        const highlightClass = data.Volume > volumeThreshold ? "highlight-row" : "";
-
-        tableBody += `
-            <tr class="${highlightClass}">
+        const previousYearEntry = filtered2023Data.find(data => data.Invoice_Group === invoiceGroup);
+        const previousYearTotal = previousYearEntry ? parseFloat(previousYearEntry.Total || 0) : 0;
+        const previousYearVolume = previousYearEntry ? parseInt(previousYearEntry.Volume || 0) : 0;
+    
+        const totalDifference = currentYearTotal - previousYearTotal;
+        const volumeDifference = currentYearVolume - previousYearVolume;
+    
+        // Apply classes based on positive or negative values, but not for zero
+        const totalClass = totalDifference === 0 ? "" : (totalDifference >= 0 ? "positive" : "negative");
+        const volumeClass = volumeDifference === 0 ? "" : (volumeDifference >= 0 ? "positive" : "negative");
+    
+        tableBodyHTML += `
+            <tr>
                 <td>${invoiceGroup}</td>
-                <td>£${formatNumber(data.Total.toFixed(2))}</td>
-                <td>${data.Volume}</td>
+                <td>£${currentYearTotal.toFixed(2)}</td>
+                <td>${currentYearVolume}</td>
+                <td>£${previousYearTotal.toFixed(2)}</td>
+                <td>${previousYearVolume}</td>
+                <td class="${totalClass}">£${totalDifference.toFixed(2)}</td>
+                <td class="${volumeClass}">${volumeDifference}</td>
             </tr>
         `;
-    }
+    });
+    
 
-    document.getElementById("customerTableBody").innerHTML = tableBody;
+    document.getElementById("customerTableBody").innerHTML = tableBodyHTML;
 }
 
+
+// Helper function to get total from previous year's data
+function getPreviousYearTotal(customerName, location) {
+    const previousYearCustomer = previousYearData.find(data => 
+        data["Customer_Name"] === customerName && data["Location"] === location
+    );
+
+    return previousYearCustomer ? parseFloat(previousYearCustomer["Total"]) : 0;
+}
 
 // Helper function to format numbers with commas
 function formatNumber(num) {
@@ -216,9 +241,20 @@ function clearSearch() {
     document.getElementById("customerDetailsContent").innerHTML = '';
 }
 
-// Load CSV data on page load
-window.onload = function() {
+
+// Helper to check if the user is on a mobile device
+function isMobileDevice() {
+    return window.innerWidth <= 768;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
     loadCustomersData();
     loadContactsData();
-};
+    loadPreviousYearData();
+
+    // Event listener for customer select
+    document.getElementById("customerSelect").addEventListener("change", selectCustomer);
+    document.getElementById("locationSelect").addEventListener("change", showDataForLocation);
+    document.getElementById("showDetailsBtn").addEventListener("click", showCustomerDetails);
+});
 
