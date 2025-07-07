@@ -284,9 +284,11 @@ function clearSearch() {
     document.getElementById("customerSelect").innerHTML = '<option value="">Select a customer</option>';
     document.getElementById("locationSelect").innerHTML = '<option value="">Select a location</option>';
     document.getElementById("customerTableBody").innerHTML = '';
-    document.getElementById("accountInfo").innerHTML = '';
+    document.getElementById("totalsSection").innerHTML = '';  // This should clear the figures
     document.getElementById("customerDetailsContent").innerHTML = '';
     
+    // Re-populate the customer dropdown after clearing
+    populateCustomerSelect();
 }
 
 
