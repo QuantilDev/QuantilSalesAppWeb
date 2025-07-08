@@ -2,26 +2,27 @@
 const productGroupMap = {
     "8.5 Herb 8": 1, "1L Herb 8": 1,
     "Straw 9": 2, "Straw 10": 2, "Straw 11": 2, "Straw 12": 2, "Straw 13": 2,
-    "Straw 14": 2, "Straw 15": 2, "Straw 16 *": 2, "Straw 17": 2, "Straw 18 *": 2,
-    "Straw 19": 2, "Straw 20 *": 2, "Straw 21": 2, "Straw 22": 2,
+    "Straw 14": 2, "Straw 15": 2, "Straw 16": 2, "Straw 17": 2, "Straw 18": 2,
+    "Straw 19": 2, "Straw 20": 2, "Straw 21": 2, "Straw 22": 2,
     "8.5cm Straw 9": 3, "8.5cm Straw 10": 3, "8.5cm Straw 11": 3, "8.5cm Straw 12": 3,
-    "8.5cm Straw 13": 3, "8.5cm Straw 14": 3, "8.5cm Straw 15": 3, "8.5cm Straw 16 *": 3,
-    "8.5cm Straw 17": 3, "8.5cm Straw 18 *": 3, "8.5cm Straw 19": 3, "8.5cm Straw 20 *": 3,
-    "8.5cm Straw 21": 3, "8.5cm Straw 22": 3,
+    "8.5cm Straw 13": 3, "8.5cm Straw 14": 3, "8.5cm Straw 15": 3, "8.5cm Straw 16": 3,
+    "8.5cm Straw 17": 3, "8.5cm Straw 18": 3, "8.5cm Straw 19": 3, "8.5cm Straw 20": 3,
+    "8.5cm Straw 21": 3, "8.5cm Straw 22": 3, "8.5cm Straw 23": 3, "8.5cm Straw 24": 3,
     "SPEA 9": 4, "SPEA 10": 4, "SPEA 11": 4, "SPEA 12": 4, "SPEA 13": 4,
-    "SPEA 14": 4, "SPEA 15": 4, "SPEA 16 *": 4, "SPEA 17": 4, "SPEA 18 *": 4, "SPEA 19": 4,
+    "SPEA 14": 4, "SPEA 15": 4, "SPEA 16": 4, "SPEA 17": 4, "SPEA 18": 4, "SPEA 19": 4,
     "8.5cm S/Peas 10": 5, "8.5cm S/Peas 11": 5, "8.5cm S/Peas 12": 5, "8.5cm S/Peas 13": 5,
-    "8.5cm S/Peas 14": 5, "8.5cm S/Peas 15": 5, "8.5cm S/Peas 16 *": 5, "8.5cm S/Peas 17": 5,
-    "8.5cm S/Peas 18 *": 5, "8.5cm S/Peas 19": 5,
-    "Grafted 14": 6, "Grafted 16 *": 6, "Grafted 18 *": 6,
-    "Grafted Chilli 14": 7, "Grafted Chilli 16 *": 7, "Grafted Chilli 18 *": 7,
+    "8.5cm S/Peas 14": 5, "8.5cm S/Peas 15": 5, "8.5cm S/Peas 16": 5, "8.5cm S/Peas 17": 5,
+    "8.5cm S/Peas 18": 5, "8.5cm S/Peas 19": 5,
+    "Grafted 14": 6, "Grafted 16": 6, "Grafted 18": 6,
+    "Grafted Chilli 14": 7, "Grafted Chilli 16": 7, "Grafted Chilli 18": 7,
     "Dyna Chilli 15": 8, "Dyna Chilli 17": 8,
     "P/Bean 15": 9, "P/Bean 17": 9, "P/Bean 19": 9,
     "Sweet Potato 17": 10,
-    "Heritage Tom 18 *": 11, "Heritage Tom 20 *": 11,
+    "Heritage Tom 18": 11, "Heritage Tom 20": 11,
     "1L Veg 20": 12, "1L Veg 22": 12, "1L Veg 24": 12,
     "Autumn Strip": 13,
-    "Wildflower Week 12": 14,
+    "Wild flower 12": 14,
+    "Mixed Pot 18": 15,
 };
 
 
@@ -42,6 +43,7 @@ const productGroupValues = {
     12: { full: 30, half: 20 },
     13: { full: 30, half: 15 },
     14: { full: 30, half: 16 },
+    15: { full: 30, },
 };
 
 
@@ -109,18 +111,20 @@ const filterCentre = () => {
 
             const buttonCell = document.createElement('td');
             const fullValue = productGroupValues[groupNumber]?.full || 30; // Default to 30 if group not defined
-            const halfValue = productGroupValues[groupNumber]?.half || 15; // Default to 15 if group not defined
+            const halfValue = productGroupValues[groupNumber]?.half; // Don't provide a default
 
             const fullButton = document.createElement('button');
             fullButton.textContent = 'Full';
             fullButton.onclick = () => inputField.value = fullValue;
-
-            const halfButton = document.createElement('button');
-            halfButton.textContent = 'Half';
-            halfButton.onclick = () => inputField.value = halfValue;
-
             buttonCell.appendChild(fullButton);
-            buttonCell.appendChild(halfButton);
+
+            // Only create the Half button if halfValue is defined
+            if (halfValue !== undefined) {
+                const halfButton = document.createElement('button');
+                halfButton.textContent = 'Half';
+                halfButton.onclick = () => inputField.value = halfValue;
+                buttonCell.appendChild(halfButton);
+            }
             row.appendChild(buttonCell);
 
             // Create the Notes column
