@@ -183,8 +183,8 @@ function showDataForLocation() {
     // Create the totals section HTML
     const totalsHTML = `
         <div class="totals-section">
-            <strong>Total Spend 2024: </strong>£${total2024.toFixed(2)} <br>
-            <strong>Total Spend 2023: </strong>£${total2023.toFixed(2)} <br>
+            <strong>Total Spend 2025: </strong>£${total2024.toFixed(2)} <br>
+            <strong>Total Spend 2024: </strong>£${total2023.toFixed(2)} <br>
             <strong>Difference: </strong><span class="${totalClass}">£${totalDifference.toFixed(2)}</span>
         </div>
     `;
@@ -307,4 +307,5 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("locationSelect").addEventListener("change", showDataForLocation);
     document.getElementById("showDetailsBtn").addEventListener("click", showCustomerDetails);
 });
+
 
